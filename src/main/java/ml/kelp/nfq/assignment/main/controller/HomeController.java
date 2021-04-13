@@ -9,6 +9,8 @@ import ml.kelp.nfq.assignment.main.repository.SpecialistRepository;
 
 import java.util.List;
 
+// non-publically accessible page for showing reservations
+
 @Controller
 public class HomeController {
 
