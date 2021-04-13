@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <title>Getting Started: Serving Web Content</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <p>Hello, World!</p>
+        <table>
+            <thead>
+            <tr>
+                <th> Title </th>
+                <th> Author </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${specialists.empty}">
+                <td colspan="2"> No specialists Available </td>
+            </tr>
+            <tr th:each="book:${specialists}">
+                <td><span th:text="${book.email}"></span></td>
+                <td><span th:text="${book.password}"></span></td>
+            </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
