@@ -10,7 +10,7 @@ import ml.kelp.nfq.assignment.main.repository.SpecialistRepository;
 import java.util.List;
 
 @Controller
-public class TestController {
+public class HomeController {
 
     @Autowired
     private SpecialistRepository specialistRepo;
@@ -18,11 +18,9 @@ public class TestController {
     private List<Specialist> specialistList;
 
     @GetMapping("/")
-    public String test(Model model) {
-
+    public String home(Model model) {
         specialistList = specialistRepo.findAll();
-
         model.addAttribute("specialists", specialistRepo.findAll());
-        return "test"; //apparently this has to be a template name
+        return "home"; //apparently this has to be a template name
     }
 }
