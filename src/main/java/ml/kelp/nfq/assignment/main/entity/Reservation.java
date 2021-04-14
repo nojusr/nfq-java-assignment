@@ -10,11 +10,14 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Long timeAdded;
     private boolean isVisiting;
 
     private Long timeStarted;
     private Long timeEnded;
+
+    private int shortId; // 3-digit number used for quick reference
+
+    private String customerSecret; // string that is used for referencing the reservation via URL
 
     @OneToOne(targetEntity = Customer.class)
     @JoinColumn(name="customerFk")
@@ -24,12 +27,15 @@ public class Reservation {
     @JoinColumn(name="specialistFk")
     private Specialist specialist;
 
-    public Reservation(Long id, Long timeAdded, boolean isVisiting, Customer customer, Specialist specialist, Long timeStarted, Long timeEnded) {
+    public  Reservation(){}
+
+    public Reservation(Long id, boolean isVisiting, Customer customer, Specialist specialist, Long timeStarted, Long timeEnded, int shortId, String customerSecret) {
         this.id = id;
-        this.timeAdded = timeAdded;
         this.isVisiting = isVisiting;
         this.customer = customer;
         this.specialist = specialist;
+        this.shortId = shortId;
+        this.customerSecret = customerSecret;
     }
 
     public Long getId() {
@@ -38,10 +44,6 @@ public class Reservation {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getTimeAdded() {
-        return timeAdded;
     }
 
     public boolean getIsVisiting() {
@@ -82,5 +84,21 @@ public class Reservation {
 
     public void setTimeEnded(Long timeEnded) {
         this.timeEnded = timeEnded;
+    }
+
+    public int getShortId() {
+        return shortId;
+    }
+
+    public void setShortId(int shortId) {
+        this.shortId = shortId;
+    }
+
+    public String getCustomerSecret() {
+        return customerSecret;
+    }
+
+    public void setCustomerSecret(String customerSecret) {
+        this.customerSecret = customerSecret;
     }
 }

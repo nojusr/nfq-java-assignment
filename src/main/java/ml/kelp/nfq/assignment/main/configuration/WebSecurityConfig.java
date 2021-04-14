@@ -63,23 +63,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-/*
-    @Bean
-    @Override
-    public UserDetailsService userDetailsService() {
-        UserDetails user =
-                User.withDefaultPasswordEncoder()
-                        .username("user")
-                        .password("password")
-                        .roles("USER")
-                        .build();
-
-        return new InMemoryUserDetailsManager(user);
-    }*/
-
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // used because it's easier to insert hand-generated passwords into the db
+        return new BCryptPasswordEncoder();
     }
 
     @Bean

@@ -21,8 +21,6 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model) {
-        specialistList = specialistRepo.findAll();
-        model.addAttribute("specialists", specialistRepo.findAll());
         return "home"; //apparently this has to be a template name
     }
 }
