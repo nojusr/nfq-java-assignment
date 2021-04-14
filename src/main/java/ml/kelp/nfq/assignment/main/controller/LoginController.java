@@ -13,11 +13,12 @@ public class LoginController {
         return "login";
     }
 
+    /*
     @RequestMapping(value="/logout")
     public RedirectView logout(ModelMap model){
         return new RedirectView("/login");
     }
-
+    */
     @RequestMapping(value="/signup")
     public String signup(){
         return "signup";

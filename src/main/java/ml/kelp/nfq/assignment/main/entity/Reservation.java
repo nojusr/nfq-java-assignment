@@ -13,6 +13,9 @@ public class Reservation {
     private Long timeAdded;
     private boolean isVisiting;
 
+    private Long timeStarted;
+    private Long timeEnded;
+
     @OneToOne(targetEntity = Customer.class)
     @JoinColumn(name="customerFk")
     private Customer customer;
@@ -21,7 +24,7 @@ public class Reservation {
     @JoinColumn(name="specialistFk")
     private Specialist specialist;
 
-    public Reservation(Long id, Long timeAdded, boolean isVisiting, Customer customer, Specialist specialist) {
+    public Reservation(Long id, Long timeAdded, boolean isVisiting, Customer customer, Specialist specialist, Long timeStarted, Long timeEnded) {
         this.id = id;
         this.timeAdded = timeAdded;
         this.isVisiting = isVisiting;
@@ -63,5 +66,21 @@ public class Reservation {
 
     public void setSpecialist(Specialist specialist) {
         this.specialist = specialist;
+    }
+
+    public Long getTimeStarted() {
+        return timeStarted;
+    }
+
+    public void setTimeStarted(Long timeStarted) {
+        this.timeStarted = timeStarted;
+    }
+
+    public Long getTimeEnded() {
+        return timeEnded;
+    }
+
+    public void setTimeEnded(Long timeEnded) {
+        this.timeEnded = timeEnded;
     }
 }
