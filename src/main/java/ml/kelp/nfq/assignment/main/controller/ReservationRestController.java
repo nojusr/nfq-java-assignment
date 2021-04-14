@@ -20,30 +20,33 @@ public class ReservationRestController { // read-only, as all other interactions
     ReservationRepository reservationRepository;
 
     @GetMapping("/reservations")
-    List<Reservation> all() {
-
+    List<Reservation> getAll() {
         List<Reservation> raw = reservationRepository.findAll();
-        List<Reservation> redacted = new ArrayList<Reservation>();
+        List<Reservation> sanitized = new ArrayList<Reservation>();
 
         for (Reservation res : raw) {
-
-            Specialist spec = res.getSpecialist();
-            //spec.setEmail("");
-            spec.setPassword("");
-            spec.setReservations(null);
-            spec.setRoles(null);
-
-            res.setCustomer(null);
-            res.setSpecialist(spec);
-            res.setCustomerSecret("");
-            redacted.add(res);
-        };
-
-        return redacted;
+            sanitized.add(sanitizeReservationForPublicAccess(res));
+        }
+        return sanitized;
     }
 
     @GetMapping("/reservations/{id}")
     Reservation getById(@PathVariable int id) {
-        return reservationRepository.findById(id).orElseThrow(() -> new ReservationNotFoundException(id));
+        Reservation raw = reservationRepository.findById(id).orElseThrow(() -> new ReservationNotFoundException(id));
+        return sanitizeReservationForPublicAccess(raw);
     }
+
+    private Reservation sanitizeReservationForPublicAccess(Reservation input) {
+        Specialist spec = input.getSpecialist();
+        spec.setPassword("");
+        spec.setReservations(null);
+        spec.setRoles(null);
+
+        input.setCustomer(null);
+        input.setSpecialist(spec);
+        input.setCustomerSecret("");
+        return input;
+    }
+
+
 }
