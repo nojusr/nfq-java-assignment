@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.nio.charset.Charset;
 import java.util.List;
@@ -51,17 +52,19 @@ public class ReservationAddController {
     }
 
     @PostMapping(value = "/reservation/add")
-    public String reservationAddPost(@ModelAttribute Reservation reservation, Model model) {
+    public RedirectView reservationAddPost(@ModelAttribute Reservation reservation, Model model) {
         String rand = rString.nextString();
         reservation.setCustomerSecret(rand);
         reservation.setIsVisiting(false);
-        reservation.setShortId(r.nextInt(999));
+        reservation.setShortId(r.nextInt(9999)); // TODO: impl system where shortId is incremented instead of random
         reservation.setSpecialist(specialistRepository.findById(reservation.getSpecialist().getId()));
+        reservation.setTimeAdded(System.currentTimeMillis() / 1000L);
 
         customerRepository.save(reservation.getCustomer());
         reservationRepository.save(reservation);
         reservationRepository.flush();
-        return "temp";
+
+        return new RedirectView("/reservation/view/"+reservation.getCustomerSecret());
     }
 
 }

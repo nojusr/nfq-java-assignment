@@ -50,6 +50,14 @@
                 .then(response => response.json())
                 .then(function(data){
                     table.innerHTML = "";
+                    data.sort(function(a, b) {
+                        if (a["timeAdded"] > b["timeAdded"]) {
+                            return 1;
+                        } else {
+                            return -1;
+                        }
+                    });
+
                     data.forEach(element => {
                         var row = document.createElement("tr");
 

@@ -15,7 +15,9 @@ public class Reservation {
     private Long timeStarted;
     private Long timeEnded;
 
-    private int shortId; // 3-digit number used for quick reference
+    private Long timeAdded;
+
+    private int shortId; // 4-digit number used for quick reference
 
     private String customerSecret; // string that is used for referencing the reservation via URL
 
@@ -29,11 +31,14 @@ public class Reservation {
 
     public  Reservation(){}
 
-    public Reservation(Long id, boolean isVisiting, Customer customer, Specialist specialist, Long timeStarted, Long timeEnded, int shortId, String customerSecret) {
+    public Reservation(Long id, boolean isVisiting, Customer customer, Specialist specialist, Long timeStarted, Long timeEnded, Long timeAdded, int shortId, String customerSecret) {
         this.id = id;
         this.isVisiting = isVisiting;
         this.customer = customer;
         this.specialist = specialist;
+        this.timeAdded = timeAdded;
+        this.timeStarted = timeStarted;
+        this.timeEnded = timeEnded;
         this.shortId = shortId;
         this.customerSecret = customerSecret;
     }
@@ -100,5 +105,13 @@ public class Reservation {
 
     public void setCustomerSecret(String customerSecret) {
         this.customerSecret = customerSecret;
+    }
+
+    public Long getTimeAdded() {
+        return timeAdded;
+    }
+
+    public void setTimeAdded(Long timeAdded) {
+        this.timeAdded = timeAdded;
     }
 }
