@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
@@ -39,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-            .antMatchers( "/css", "/js").permitAll()
+            .antMatchers( "/css", "/js", "/reservation/add", "/reservation/view").permitAll()
             .antMatchers("/", "/home").authenticated()
             .and()
             .formLogin()
@@ -49,8 +50,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .permitAll()
             .and()
             .logout()
-            .logoutSuccessUrl("/login?logout=true")
-            .invalidateHttpSession(true)
+            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+            .logoutSuccessUrl("/login")
+            .invalidateHttpSession(true)        // set invalidation state when logout
+            .deleteCookies("JSESSIONID")
             .permitAll();
     }
 

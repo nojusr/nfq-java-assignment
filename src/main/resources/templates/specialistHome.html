@@ -29,13 +29,9 @@
                         <a class="nav-link" href="/signup">Sign Up</a>
                     </li>
                     <li sec:authorize="isAuthenticated()" class="nav-item">
-                        <form>
-                            <a class="nav-link" href="#">Logout</a>
-                        </form>
+                        <a class="nav-link" href="/logout">Logout</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/reservation/add">Add Reservation</a>
-                    </li>
+
                 </ul>
             </div>
         </nav>

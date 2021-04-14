@@ -8,7 +8,7 @@ public class SpecialistHomeController {
 
     @RequestMapping("/home")
     public String specialistHome() {
-        return "temp";
+        return "specialistHome";
     }
 
 }
