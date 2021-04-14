@@ -18,17 +18,10 @@ public class SpecialistDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
-        System.out.println("Trying to find email..." + email.toString());
-
         Specialist spec = specialistRepository.findByEmail(email);
-
         if (spec == null) {
-            System.out.println("email not found..");
             throw new UsernameNotFoundException(email);
         }
-
-        System.out.println("email found: password:"+spec.getPassword());
         return new SpecialistUserDetails(spec);
     }
 }

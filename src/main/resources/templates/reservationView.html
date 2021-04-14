@@ -50,14 +50,19 @@
     </div>
 
   </div>
-  <script>
-    const infoText;
+  <script th:inline="javascript">
+    var customerSecret = /*[[${reservation.customerSecret}]]*/ "null";
+    var reservationInfoPath = "/reservation/view/"+customerSecret+"/info";
+
+    var queueNumElement = document.getElementById("queue-num");
+    var approxTimeElement = document.getElementById("time-approx");
 
     setInterval(function() {
-        fetch('/reservations')
+        fetch(reservationInfoPath)
             .then(response => response.json())
             .then(function(data){
-              
+              queueNumElement.innerHTML = data["queueNum"];
+              approxTimeElement.innerHTML = data["estWaitTime"] // TODO: proper time formatting
             });
     }, 5000);
   </script>
