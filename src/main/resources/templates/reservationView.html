@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Welcome Security with Spring Boot!</title>
+  <title>Reservations</title>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <link rel="stylesheet"
@@ -57,14 +57,17 @@
     var queueNumElement = document.getElementById("queue-num");
     var approxTimeElement = document.getElementById("time-approx");
 
-    setInterval(function() {
+    var liveLoadFunc = function() {
         fetch(reservationInfoPath)
             .then(response => response.json())
             .then(function(data){
               queueNumElement.innerHTML = data["queueNum"];
-              approxTimeElement.innerHTML = data["estWaitTime"] // TODO: proper time formatting
+              approxTimeElement.innerHTML = new Date(data["estWaitTime"] * 100).toISOString().substr(11, 8);
             });
-    }, 5000);
+    };
+
+    liveLoadFunc(); // run once on startup
+    setInterval(liveLoadFunc, 5000); // and once every 5 seconds
   </script>
 </body>
 </html>

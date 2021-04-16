@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Welcome Security with Spring Boot!</title>
+    <title>Reservations</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet"
@@ -14,6 +14,7 @@
         }
         .huge-table thead tr td {
             font-size: 3em;
+            
         }
 
         .huge-table thead {
@@ -22,6 +23,7 @@
 
         .huge-table tbody tr td {
             font-size: 7em;
+            border-right: 1px dashed var(--secondary);
         }
 
         .huge-table tbody tr {
@@ -35,7 +37,8 @@
         <thead>
             <tr>
                 <td>Code</td>
-                <td>Is Currently visiting</td>
+                <td>Queue Number</td>
+                <td>Wait Time</td>
             </tr>
         </thead>
         <tbody id="main-table">
@@ -45,7 +48,8 @@
 
     <script>
         const table = document.getElementById("main-table");
-        setInterval(function() {
+
+        var liveLoadFunc = function() {
             fetch('/reservations')
                 .then(response => response.json())
                 .then(function(data){
@@ -58,22 +62,38 @@
                         }
                     });
 
+
+                    console.log(data);
                     data.forEach(element => {
                         var row = document.createElement("tr");
 
+                        
+
+                        console.log(element["waitTime"]);
+
+                        //var waitTime = "argh";
+                        var waitTime = new Date(element["waitTime"] * 100).toISOString().substr(11, 8);
+
                         var shortIdCell = document.createElement("td");
-                        var isInProgressCell = document.createElement("td");
+                        var queueCell = document.createElement("td");
+                        var waitTimeCell = document.createElement("td");
+
 
                         shortIdCell.innerHTML = element["shortId"];
-                        isInProgressCell.innerHTML = element["isVisiting"];
+                        queueCell.innerHTML = element["queueNumber"];
+                        waitTimeCell.innerHTML = waitTime;
 
                         row.appendChild(shortIdCell);
-                        row.appendChild(isInProgressCell);
+                        row.appendChild(queueCell);
+                        row.appendChild(waitTimeCell);
 
                         table.appendChild(row);
                     });
                 });
-        }, 5000);
+        };
+
+        liveLoadFunc(); // run once on startup
+        setInterval(liveLoadFunc, 5000); // and once every 5 seconds
     </script>
 </body>
 </html>

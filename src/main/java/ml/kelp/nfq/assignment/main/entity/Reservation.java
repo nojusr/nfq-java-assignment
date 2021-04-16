@@ -12,6 +12,8 @@ public class Reservation {
 
     private boolean isVisiting;
 
+    private boolean isFinished;
+
     private Long timeStarted;
     private Long timeEnded;
 
@@ -29,11 +31,19 @@ public class Reservation {
     @JoinColumn(name="specialistFk")
     private Specialist specialist;
 
+    @Transient
+    private double waitTime;// calculated in the reservation REST controller
+
+    @Transient
+    private int queueNumber;// calculated in the reservation REST controller
+
+
     public  Reservation(){}
 
-    public Reservation(Long id, boolean isVisiting, Customer customer, Specialist specialist, Long timeStarted, Long timeEnded, Long timeAdded, int shortId, String customerSecret) {
+    public Reservation(Long id, boolean isVisiting, boolean isFinished, Customer customer, Specialist specialist, Long timeStarted, Long timeEnded, Long timeAdded, int shortId, String customerSecret) {
         this.id = id;
         this.isVisiting = isVisiting;
+        this.isFinished = isFinished;
         this.customer = customer;
         this.specialist = specialist;
         this.timeAdded = timeAdded;
@@ -113,5 +123,29 @@ public class Reservation {
 
     public void setTimeAdded(Long timeAdded) {
         this.timeAdded = timeAdded;
+    }
+
+    public double getWaitTime() {
+        return waitTime;
+    }
+
+    public void setWaitTime(double waitTime) {
+        this.waitTime = waitTime;
+    }
+
+    public int getQueueNumber() {
+        return queueNumber;
+    }
+
+    public void setQueueNumber(int queueNumber) {
+        this.queueNumber = queueNumber;
+    }
+
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public void setFinished(boolean finished) {
+        isFinished = finished;
     }
 }

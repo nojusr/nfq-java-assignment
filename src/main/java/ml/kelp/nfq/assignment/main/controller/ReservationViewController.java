@@ -39,7 +39,6 @@ public class ReservationViewController {
         return "reservationView";
     }
 
-
     //TODO: test if this would work by replacing Map<String, String> with Map<String, Object>
     @GetMapping("/reservation/view/{secret}/info")
     @ResponseBody
