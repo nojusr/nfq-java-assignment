@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Reservations</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="stylesheet"
+        href="/css/bootstrap.min.css"/>
+  <script src="/js/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="#">Reservations</a>
+
+  <div class="collapse navbar-collapse" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+      <li sec:authorize="isAnonymous()" class="nav-item">
+        <a class="nav-link" href="/login">Log In</a>
+      </li>
+      <li sec:authorize="isAnonymous()"  class="nav-item">
+        <a class="nav-link" href="/signup">Sign Up</a>
+      </li>
+      <li sec:authorize="isAuthenticated()" class="nav-item">
+        <a class="nav-link" href="/logout">Logout</a>
+      </li>
+
+    </ul>
+  </div>
+</nav>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6" style="padding-top: 15px;">
+      <h1>Welcome!</h1>
+      <a href="/reservation/add">Add a reservation</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -43,9 +43,12 @@
           </div>
           
         </div>
+        <p>Your specialist's name: <span th:text="${reservation.specialist.fullName}"></span></p>
         <p>Your queue number: <span id="queue-num"></span></p>
         <p>Approximate time until appointment: <span id="time-approx"></span></p>
-        <button type="button" class="btn btn-primary">Cancel reservation</button>
+        <!--<button type="button" class="btn btn-primary">Cancel reservation</button>-->
+        <!--<a th:href="@{/reservation/view/{secret}/cancel}(secret=${reservation.customerSecret})">Cancel reservation</a>-->
+        <a class="btn btn-primary" th:href="@{${'/reservation/view/' + reservation.customerSecret + '/cancel'}}">Cancel reservation</a>
       </div>
     </div>
 

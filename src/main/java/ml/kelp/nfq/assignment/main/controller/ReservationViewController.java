@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,12 +32,25 @@ public class ReservationViewController {
     @RequestMapping("/reservation/view/{secret}")
     public String viewReservation(@PathVariable String secret, Model model) {
         Reservation res = reservationRepository.findByCustomerSecret(secret);
-        if (res == null) {
+        if (res == null || res.isFinished()) {
             return "reservationNotFound";
         }
 
         model.addAttribute("reservation", res);
         return "reservationView";
+    }
+
+    @RequestMapping("/reservation/view/{secret}/cancel")
+    public RedirectView cancelReservation(@PathVariable String secret, Model model) {
+        Reservation res = reservationRepository.findByCustomerSecret(secret);
+        if (res == null || res.isFinished()) {
+            return new RedirectView("/");
+        }
+
+        res.setFinished(true);
+        reservationRepository.save(res);
+        reservationRepository.flush();
+        return new RedirectView("/"); //TODO: implement feedback for user
     }
 
     //TODO: test if this would work by replacing Map<String, String> with Map<String, Object>

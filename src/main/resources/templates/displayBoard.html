@@ -45,7 +45,6 @@
             
         </tbody>
     </table>
-
     <script>
         const table = document.getElementById("main-table");
 
@@ -61,23 +60,16 @@
                             return -1;
                         }
                     });
-
-
                     console.log(data);
                     data.forEach(element => {
                         var row = document.createElement("tr");
-
-                        
-
                         console.log(element["waitTime"]);
 
-                        //var waitTime = "argh";
                         var waitTime = new Date(element["waitTime"] * 100).toISOString().substr(11, 8);
 
                         var shortIdCell = document.createElement("td");
                         var queueCell = document.createElement("td");
                         var waitTimeCell = document.createElement("td");
-
 
                         shortIdCell.innerHTML = element["shortId"];
                         queueCell.innerHTML = element["queueNumber"];
