@@ -34,20 +34,22 @@
       <div class="col-lg-6" style="padding-top: 15px;">
         <h1>Reservation waiting list</h1>
         <div class="row jumbotron" style="padding: 15px; align-items: center;">
-          <div class="col-lg-8">
+          <div class="col-8">
             <h3>Your reservation code: </h3>
             
           </div>
-          <div class="col-sm-3">
+          <div class="col-2">
             <h1 th:text="${reservation.shortId}"></h1>
           </div>
+          <br>
+          <div class="col-10">
+            <h3  id="visit-message"/>
+          </div>  
           
         </div>
         <p>Your specialist's name: <span th:text="${reservation.specialist.fullName}"></span></p>
         <p>Your queue number: <span id="queue-num"></span></p>
         <p>Approximate time until appointment: <span id="time-approx"></span></p>
-        <!--<button type="button" class="btn btn-primary">Cancel reservation</button>-->
-        <!--<a th:href="@{/reservation/view/{secret}/cancel}(secret=${reservation.customerSecret})">Cancel reservation</a>-->
         <a class="btn btn-primary" th:href="@{${'/reservation/view/' + reservation.customerSecret + '/cancel'}}">Cancel reservation</a>
       </div>
     </div>
@@ -57,13 +59,24 @@
     var customerSecret = /*[[${reservation.customerSecret}]]*/ "null";
     var reservationInfoPath = "/reservation/view/"+customerSecret+"/info";
 
+
     var queueNumElement = document.getElementById("queue-num");
     var approxTimeElement = document.getElementById("time-approx");
+    var visitMessage = document.getElementById("visit-message");
 
     var liveLoadFunc = function() {
         fetch(reservationInfoPath)
             .then(response => response.json())
             .then(function(data){
+
+              if (data["isVisiting"] === "true") {
+                visitMessage.innerHTML = "Your queue is up! Go to your assigned specialist.";
+              }
+
+              else if (data["isFinished"] === "true") {
+                window.location.pathname = "/";
+              }
+
               queueNumElement.innerHTML = data["queueNum"];
               approxTimeElement.innerHTML = new Date(data["estWaitTime"] * 100).toISOString().substr(11, 8);
             });

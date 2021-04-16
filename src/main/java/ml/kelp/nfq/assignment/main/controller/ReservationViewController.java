@@ -72,6 +72,8 @@ public class ReservationViewController {
         output.put("queueNum", String.valueOf(queueNum));
         output.put("avgTime", String.valueOf(averageWaitTime));
         output.put("estWaitTime", String.valueOf(estWaitTimeSeconds));
+        output.put("isVisiting", String.valueOf(res.getIsVisiting()));
+        output.put("isFinished", String.valueOf(res.isFinished()));
         return output;
     }
 }
