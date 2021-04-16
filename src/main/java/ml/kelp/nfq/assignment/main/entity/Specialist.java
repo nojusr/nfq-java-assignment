@@ -15,6 +15,8 @@ public class Specialist {
     private String email;
     private String password; // hashed
 
+    private String fullName;
+
     @OneToMany(targetEntity = Reservation.class, mappedBy = "specialist")
     private List<Reservation> reservations;
 
@@ -25,13 +27,15 @@ public class Specialist {
 
     public Specialist() {}
 
-    public Specialist(Long id, String email, String password, List<Reservation> reservations, Set<Role> roles, boolean enabled) {
+    public Specialist(Long id, String email, String password, String fullName, List<Reservation> reservations, Set<Role> roles, boolean enabled) {
         this.id = id;
         this.email = email;
         this.password = password;
+        this.fullName = fullName;
         this.reservations = reservations;
         this.roles = roles;
         this.isEnabled = enabled;
+
     }
 
     public Long getId() {
@@ -80,5 +84,13 @@ public class Specialist {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 }

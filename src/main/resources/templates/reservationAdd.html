@@ -42,7 +42,7 @@
                         <div class="form-group">
                             <label for="exampleSelect1">Select Specialist</label>
                             <select th:field="*{specialist.id}" class="form-control" id="exampleSelect1">
-                                <option th:each="spec:${specialists}" value="=" th:value="${spec.id}" th:text="${spec.email}"></option>
+                                <option th:each="spec:${specialists}" value="=" th:value="${spec.id}" th:text="${spec.fullName}"></option>
                             </select>
                         </div>
                     </fieldset>
