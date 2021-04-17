@@ -30,6 +30,8 @@ public class SpecialistUserDetails implements UserDetails {
         return authorities;
     }
 
+    public Specialist getSpecialist() {return specialist;}
+
     @Override
     public String getPassword() {
         return specialist.getPassword();

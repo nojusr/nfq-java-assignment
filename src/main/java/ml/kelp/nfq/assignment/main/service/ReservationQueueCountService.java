@@ -21,17 +21,32 @@ public class ReservationQueueCountService {
         List<Reservation> specialistReservations = reservationRepository
                 .findBySpecialistOrderByTimeAddedDesc(reservation.getSpecialist());
 
-        for (Reservation res : specialistReservations) {
-
+        if (specialistReservations == null) {
+            return 0;
         }
+
+        System.out.println("-----------------------------------------------------------------------------------------");
+        System.out.println(specialistReservations);
+        System.out.println("-----------------------------------------------------------------------------------------");
+
+        specialistReservations.removeIf(res -> (res.isFinished()));
+
+        for (Reservation res : specialistReservations) {
+            System.out.println(res);
+        }
+
+        System.out.println("-----------------------------------------------------------------------------------------");
+        System.out.println(specialistReservations.size());
+        System.out.println("-----------------------------------------------------------------------------------------");
+
 
         for (int i = 0; i < specialistReservations.size(); i++) {
             if (specialistReservations.get(i).getId() == reservation.getId()) {
                 return specialistReservations.size()-i;
-            };
+            }
         }
 
-        return -1;
+        return 0;
     }
 
 }
