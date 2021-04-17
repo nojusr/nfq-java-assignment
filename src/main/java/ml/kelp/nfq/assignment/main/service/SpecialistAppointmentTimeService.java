@@ -23,7 +23,7 @@ public class SpecialistAppointmentTimeService {
 
         int amountAveraged = 0;
         Long sum = 0L;
-        
+
         for (Reservation res : reservations) {
             Long startTime = res.getTimeStarted();
             Long endTime = res.getTimeEnded();
