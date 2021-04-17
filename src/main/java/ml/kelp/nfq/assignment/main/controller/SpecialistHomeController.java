@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.annotation.PreDestroy;
 import java.security.Principal;
 import java.util.List;
 
@@ -50,14 +51,21 @@ public class SpecialistHomeController {
     }
 
     @RequestMapping("/home/start/{id}")
-    public RedirectView specialistStartAppointment(@PathVariable(name="id") Long reservationID) {
-
+    public RedirectView specialistStartAppointment(@PathVariable(name="id") Long reservationID, Model model) {
         long currentUnixTime = System.currentTimeMillis() / 1000L;
+
+        if (isSpecialistVisiting()) {
+            model.addAttribute("message", "You already have an appointment in progress.");
+            return new RedirectView("/home");
+
+        }
 
         Reservation res = reservationRepository.findOneById(reservationID);
         res.setTimeStarted(currentUnixTime);
         res.setIsVisiting(true);
         reservationRepository.saveAndFlush(res);
+
+
 
         return new RedirectView("/home");
     }
@@ -77,16 +85,27 @@ public class SpecialistHomeController {
 
     @RequestMapping("/home/cancel/{id}")
     public RedirectView specialistCancelAppointment(@PathVariable(name="id") Long reservationID) {
-        long currentUnixTime = System.currentTimeMillis() / 1000L;
         Reservation res = reservationRepository.findOneById(reservationID);
 
         if(res.getIsVisiting() == true) {
             res.setIsVisiting(false);
-
         }
         res.setFinished(true);
         reservationRepository.saveAndFlush(res);
         return new RedirectView("/home");
     }
 
+    private boolean isSpecialistVisiting() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Specialist specialist = ((SpecialistUserDetails)auth.getPrincipal()).getSpecialist();
+
+        List<Reservation> reservations = reservationRepository.findBySpecialistOrderByTimeAddedDesc(specialist);
+
+        for (Reservation res : reservations) {
+            if (res.getIsVisiting() && !res.isFinished()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

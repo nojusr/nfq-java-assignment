@@ -12,4 +12,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
     Reservation findOneById(Long id);
 
     List<Reservation> findBySpecialistOrderByTimeAddedDesc(Specialist specialist);
+
+
 }

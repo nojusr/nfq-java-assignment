@@ -25,6 +25,9 @@ public class Specialist {
 
     private boolean isEnabled;
 
+    @Transient
+    private boolean isVisiting;
+
     public Specialist() {}
 
     public Specialist(Long id, String email, String password, String fullName, List<Reservation> reservations, Set<Role> roles, boolean enabled) {
@@ -94,4 +97,11 @@ public class Specialist {
         this.fullName = fullName;
     }
 
+    public boolean isVisiting() {
+        return isVisiting;
+    }
+
+    public void setVisiting(boolean visiting) {
+        isVisiting = visiting;
+    }
 }
