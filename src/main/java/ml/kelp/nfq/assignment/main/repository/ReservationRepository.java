@@ -9,5 +9,7 @@ import java.util.List;
 public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
     Reservation findByCustomerSecret(String customerSecret);
 
+    Reservation findOneById(Long id);
+
     List<Reservation> findBySpecialistOrderByTimeAddedDesc(Specialist specialist);
 }

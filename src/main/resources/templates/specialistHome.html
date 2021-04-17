@@ -45,14 +45,15 @@
                             <th scope="col">Actions</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="main-table">
                           <tr th:each="res : ${reservations}">
                               <td th:text="${res.shortId}"></td>
                               <td th:text="${res.customer.name}"></td>
                               <td th:text="${res.queueNumber}"></td>
                               <td>
-                                  <a href="#" class="btn btn-primary btn-sm">Start appointment</a>
-                                  <a href="#" class="btn btn-primary btn-sm">Cancel appointment</a>
+                                  <a th:if="${res.isVisiting}" th:href="@{${'/home/finish/'+res.id}}" class="btn btn-primary btn-sm">End appointment</a>
+                                  <a th:unless="${res.isVisiting}" th:href="@{${'/home/start/'+res.id}}" class="btn btn-primary btn-sm">Start appointment</a>
+                                  <a th:href="@{${'/home/cancel/'+res.id}}" class="btn btn-primary btn-sm">Cancel appointment</a>
                               </td>
                           </tr>
                         </tbody>
@@ -60,6 +61,5 @@
                 </div>
             </div>
         </div>
-
     </body>
 </html>

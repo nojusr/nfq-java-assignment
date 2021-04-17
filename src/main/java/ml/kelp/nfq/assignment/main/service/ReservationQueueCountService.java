@@ -25,20 +25,11 @@ public class ReservationQueueCountService {
             return 0;
         }
 
-        System.out.println("-----------------------------------------------------------------------------------------");
-        System.out.println(specialistReservations);
-        System.out.println("-----------------------------------------------------------------------------------------");
-
         specialistReservations.removeIf(res -> (res.isFinished()));
 
         for (Reservation res : specialistReservations) {
             System.out.println(res);
         }
-
-        System.out.println("-----------------------------------------------------------------------------------------");
-        System.out.println(specialistReservations.size());
-        System.out.println("-----------------------------------------------------------------------------------------");
-
 
         for (int i = 0; i < specialistReservations.size(); i++) {
             if (specialistReservations.get(i).getId() == reservation.getId()) {
