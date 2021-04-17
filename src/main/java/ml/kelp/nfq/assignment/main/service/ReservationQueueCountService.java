@@ -2,7 +2,6 @@ package ml.kelp.nfq.assignment.main.service;
 
 import ml.kelp.nfq.assignment.main.entity.Reservation;
 import ml.kelp.nfq.assignment.main.repository.ReservationRepository;
-import ml.kelp.nfq.assignment.main.repository.SpecialistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
