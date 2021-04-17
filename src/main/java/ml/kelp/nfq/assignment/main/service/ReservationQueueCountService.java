@@ -16,8 +16,6 @@ public class ReservationQueueCountService {
 
     public int getReservationQueueNumber(Reservation reservation) {
 
-        //Long specialistID = reservation.getSpecialist().getId();
-
         List<Reservation> specialistReservations = reservationRepository
                 .findBySpecialistOrderByTimeAddedDesc(reservation.getSpecialist());
 

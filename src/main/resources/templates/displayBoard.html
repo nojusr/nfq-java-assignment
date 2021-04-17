@@ -48,6 +48,20 @@
     <script>
         const table = document.getElementById("main-table");
 
+        const zeroPad = (num, places) => String(num).padStart(places, '0');
+
+        function secondsToHms(d) {
+            d = Number(d);
+            var h = Math.floor(d / 3600);
+            var m = Math.floor(d % 3600 / 60);
+            var s = Math.floor(d % 3600 % 60);
+
+            var hDisplay = h > 0 ? zeroPad(h, 2) + ":" : "00:";
+            var mDisplay = m > 0 ? zeroPad(m, 2) + ":" : "00:";
+            var sDisplay = s > 0 ? zeroPad(s, 2) : "";
+            return hDisplay + mDisplay + sDisplay; 
+        }
+
         var liveLoadFunc = function() {
             fetch('/reservations')
                 .then(response => response.json())
@@ -65,7 +79,7 @@
                         var row = document.createElement("tr");
                         console.log(element["waitTime"]);
 
-                        var waitTime = new Date(element["waitTime"] * 100).toISOString().substr(11, 8);
+                        var waitTime = secondsToHms(element["waitTime"]);
 
                         var shortIdCell = document.createElement("td");
                         var queueCell = document.createElement("td");

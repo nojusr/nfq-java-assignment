@@ -23,7 +23,7 @@ public class SpecialistAppointmentTimeService {
 
         int amountAveraged = 0;
         Long sum = 0L;
-
+        
         for (Reservation res : reservations) {
             Long startTime = res.getTimeStarted();
             Long endTime = res.getTimeEnded();
@@ -31,6 +31,7 @@ public class SpecialistAppointmentTimeService {
             if (startTime == null || endTime == null) {
                 continue;
             }
+
             amountAveraged++;
             Long timeSpent = endTime-startTime;
             sum += timeSpent;
@@ -40,7 +41,7 @@ public class SpecialistAppointmentTimeService {
             }
         }
 
-        if (amountAveraged == 0) {
+       if (amountAveraged == 0) {
             return 0;
         } else {
             return (double) sum / (double) amountAveraged;

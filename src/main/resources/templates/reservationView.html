@@ -59,6 +59,19 @@
     var customerSecret = /*[[${reservation.customerSecret}]]*/ "null";
     var reservationInfoPath = "/reservation/view/"+customerSecret+"/info";
 
+    const zeroPad = (num, places) => String(num).padStart(places, '0');
+
+    function secondsToHms(d) {
+        d = Number(d);
+        var h = Math.floor(d / 3600);
+        var m = Math.floor(d % 3600 / 60);
+        var s = Math.floor(d % 3600 % 60);
+
+        var hDisplay = h > 0 ? zeroPad(h, 2) + ":" : "00:";
+        var mDisplay = m > 0 ? zeroPad(m, 2) + ":" : "00:";
+        var sDisplay = s > 0 ? zeroPad(s, 2) : "";
+        return hDisplay + mDisplay + sDisplay; 
+    }
 
     var queueNumElement = document.getElementById("queue-num");
     var approxTimeElement = document.getElementById("time-approx");
@@ -78,7 +91,7 @@
               }
 
               queueNumElement.innerHTML = data["queueNum"];
-              approxTimeElement.innerHTML = new Date(data["estWaitTime"] * 100).toISOString().substr(11, 8);
+              approxTimeElement.innerHTML = secondsToHms(data["estWaitTime"]);
             });
     };
 

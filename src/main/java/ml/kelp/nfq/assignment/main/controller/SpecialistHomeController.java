@@ -16,6 +16,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.annotation.PreDestroy;
 import java.security.Principal;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -42,9 +43,14 @@ public class SpecialistHomeController {
 
         specialistReservations.removeIf(res -> (res.isFinished()));
 
+
+
         for (Reservation res : specialistReservations) {
             res.setQueueNumber(queueCountService.getReservationQueueNumber(res));
+
         }
+
+        specialistReservations.sort(Comparator.comparingInt(Reservation::getQueueNumber));
 
         model.addAttribute("reservations", specialistReservations);
         return "specialistHome";
@@ -57,15 +63,12 @@ public class SpecialistHomeController {
         if (isSpecialistVisiting()) {
             model.addAttribute("message", "You already have an appointment in progress.");
             return new RedirectView("/home");
-
         }
 
         Reservation res = reservationRepository.findOneById(reservationID);
         res.setTimeStarted(currentUnixTime);
         res.setIsVisiting(true);
         reservationRepository.saveAndFlush(res);
-
-
 
         return new RedirectView("/home");
     }
